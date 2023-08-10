@@ -6,8 +6,15 @@
 </head>
 <body>
     <h1>FEZ LOGIN MIZERAVI :) </h1>
-    <h3>BEM VINDO(A)</h3>
-    <a href="{{ url_for('login') }}">
+    <h3>BEM VINDO(A) {{ user.name }}</h3>
+    <h2>Seus dados são:</h2>
+    <ul>
+        <li>NIF:{{ user.nif }}</li>
+        <li>CONTATO:{{ user.contact }}</li>
+        <li>EMAIL:{{ user.email }}</li>
+        <li>PASSWORD:{{ user.password }}</li>
+    </ul>
+    <a href="{{ url_for('logout') }}">
         <button type="button" class="button-default"> Logout </button>
     </a>
 </body>

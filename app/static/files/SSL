@@ -1,0 +1,12 @@
+IP addresses
+2620:1ec:bdf:0:0:0:0:71 (IPv6)
+2620:1ec:46:0:0:0:0:71 (IPv6)
+13.107.246.71 (IPv4)
+13.107.213.71 (IPv4)
+"A+" grade is the maximum rating offered by SSL Labs. This indicates that the server has been securely configured to provide encrypted communications.
+The results show that the SSL/TLS certificates used by the server meet strict security standards.
+Positive Conclusion: The results indicate that the site's SSL/TLS configuration is of high quality and security.
+This is a good sign as it suggests that encryption and communications security are well implemented.
+
+Regular Monitoring: Maintaining continuous monitoring is essential to ensure SSL/TLS security is maintained over time.
+New vulnerabilities can emerge, and it's important to keep certificates and configurations up to date.

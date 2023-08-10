@@ -1,5 +1,6 @@
 from app import database
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash
 
 
 class User(database.Model, UserMixin):
@@ -13,30 +14,20 @@ class User(database.Model, UserMixin):
     user = database.Column(database.String, nullable=True, unique=True)
     password = database.Column(database.String, nullable=True)
 
-    #  Under we wave properties and methods to uso with the FlaskLogin
-    @property
-    def is_authenticated(self):
-        return True
-
-    @property
-    def is_active(self):
-        return True
-
-    @property
-    def is_anonymous(self):
-        return False
-
     def get_id(self):
         return str(self.nif)
 
-    def __init__(self, nif, name, position, contact, email, user, password):
+    def set_password(self, password):  # Function to register and make hash password
+        self.password = generate_password_hash(password)
+
+    def __init__(self, nif, name, position, contact, email, user):
         self.nif = nif
         self.name = name
         self.position = position
         self.contact = contact
         self.email = email
         self.user = user
-        self.password = password
+        self.password = None
 
 
 class Trip(database.Model):
