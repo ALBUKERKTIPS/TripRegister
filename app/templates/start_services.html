@@ -5,14 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>FEZ LOGIN MIZERAVI :) </h1>
-    <h3>BEM VINDO(A) {{ user.name }}</h3>
+    <h1>BEM VINDO(A) {{ user.name }}</h1>
     <h2>Seus dados são:</h2>
     <ul>
         <li>NIF:{{ user.nif }}</li>
         <li>CONTATO:{{ user.contact }}</li>
         <li>EMAIL:{{ user.email }}</li>
-        <li>PASSWORD:{{ user.password }}</li>
+        <li>CARGO:{{ user.position }}</li>
+        <li>TELEFONE:{{ user.contact }}</li>
     </ul>
     <a href="{{ url_for('logout') }}">
         <button type="button" class="button-default"> Logout </button>

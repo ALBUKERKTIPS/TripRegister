@@ -1,8 +1,8 @@
-from app import app
+from app import app, database
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from app.models.tables_db import User  # To create instance inside the route Login
-from app.models.forms import LoginForm  # To create instance inside the route Login
+from app.models.forms import LoginForm, CreateForm  # To create instance inside the route Login
 from werkzeug.security import check_password_hash
 
 
@@ -39,3 +39,28 @@ def logout():
 @app.route('/services')
 def service():
     render_template("services.html")
+
+
+@app.route('/create-account', methods=['GET', 'POST'])
+def create_account():
+    create_form = CreateForm()
+    if create_form.validate_on_submit():
+        with database.session.begin():
+            try:
+                new_user = User(nif=create_form.nif.data,
+                                name=create_form.name.data,
+                                position=create_form.position.data,
+                                contact=create_form.contact.data,
+                                email=create_form.email.data,
+                                user=create_form.user.data
+                                )
+                new_user.set_password(create_form.password.data)  # Making Hash
+                database.session.add(new_user)
+                print('salvou no banco!')
+                flash('Account Created Successfully', 'success')
+                return redirect(url_for('login'))  # After create, go to login page
+            except Exception as e:
+                database.session.rollback()  # revert the process in case error ( hash or something)
+                print('deu erro!')
+                flash('Failed to create account. Please try again', 'error')
+    return render_template('register.html', create_form=create_form)

@@ -3,46 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ url_for('static', filename='#') }}" type="image/xx-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_forms.css') }}">
     <title>Tagus Company</title>
 </head>
 <body>
-    {% with messages = get_flashed_messages(with_categories=True) %}
+
+        {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
-               <div class="alert alert-danger" role="alert">
+                <div class="alert" role="alert">
                     <ul class="flash-messages">
                         {% for category, message in messages %}
-                            <li class="{{ category }}">{{ message }}</li>
+                            {% if category == 'success' %}
+                                <li class="alert alert-success">{{ message }}</li>
+                            {% elif category == 'error' %}
+                                <li class="alert alert-danger">{{ message }}</li>
+                            {% else %}
+                                <li class="{{ category }}"> {{ message }}</li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
-               </div>
+                </div>
             {% endif %}
-    {% endwith %}
+        {% endwith %}
 
-    <form action="{{ url_for('login') }}" method="POST">
-        {{ form.csrf_token }} <!-- Security field to the form, to validate -->
+    <div class="container">
+        <form action="{{ url_for('login') }}" method="POST">
+            {{ form.csrf_token }} <!-- Security field to the form, to validate -->
 
-        <div class="field">
-             <label>User</label>
-            {{ form.username(class="field-user", placeholder="Your User") }}
+            <div class="form-group">
+                 <label>User</label>
+                {{ form.username(class="field-user", placeholder="Your User") }}
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                {{ form.password(class="field-password", placeholder="Your Password") }}
+            </div>
+            <button type="submit" class="button-default"> Login </button>
+
+        </form>
+        <div class="create-account">
+            <h4>Don't have account yet?</h4>
+            <a href="{{ url_for('create_account') }}">
+                <button class="button-to-route-create">Sign Up NOW!</button>
+            </a>
         </div>
-
-        <div class="field">
-            <label>Password</label>
-            {{ form.password(class="field-password", placeholder="Your Password") }}
-        </div>
-
-        <div class="checkbox">
-            <label>
-                {{ form.remember_me }} Remember me
-            </label>
-        </div>
-
-        <button type="submit" class="button-default"> Login </button>
-    </form>
-
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    </div>
 
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <title>Register Now</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Create an Account</h1>
+
+        <form action="{{ url_for('create_account') }}" method="POST">
+            {{ create_form.hidden_tag() }} <!-- Security field to the form, to validate -->
+            <div class="form-group">
+                <label>{{ create_form.nif.label }}</label>
+                {{ create_form.nif(class="form-control", placeholder="document") }}
+            </div>
+            <div class="form-group">
+                <label>{{ create_form.name.label }}</label>
+                {{ create_form.name(class="form-control", placeholder="full Name") }}
+            </div>
+            <div class="form-group">
+                <label>{{ create_form.position.label }}</label>
+                {{ create_form.position(class="form-control", placeholder="Put List") }}
+            </div>
+            <div class="form-group">
+                <label>{{ create_form.contact.label }}</label>
+                {{ create_form.contact(class="form-control", placeholder="+351") }}
+            </div>
+            <div class="form-group">
+                <label>{{ create_form.email.label }}</label>
+                {{ create_form.email(class="form-control", placeholder="email") }}
+            </div>
+            <div class="form-group">
+                <label>{{ create_form.user.label }}</label>
+                {{ create_form.user(class="form-control", placeholder="user") }}
+            </div>
+            <div class="form-group">
+                <label>{{ create_form.password.label }}</label>
+                {{ create_form.password(class="form-control", placeholder="*****") }}
+            </div>
+            <div class="form-group">
+                <label>{{ create_form.confirm_password.label }}</label>
+                {{ create_form.confirm_password(class="form-control", placeholder="*****") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+    </div>
+</body>
+</html>
