@@ -2,20 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_start_services.css')}}">
     <title>Title</title>
 </head>
 <body>
-    <h1>BEM VINDO(A) {{ user.name }}</h1>
-    <h2>Seus dados são:</h2>
-    <ul>
-        <li>NIF:{{ user.nif }}</li>
-        <li>CONTATO:{{ user.contact }}</li>
-        <li>EMAIL:{{ user.email }}</li>
-        <li>CARGO:{{ user.position }}</li>
-        <li>TELEFONE:{{ user.contact }}</li>
-    </ul>
-    <a href="{{ url_for('logout') }}">
-        <button type="button" class="button-default"> Logout </button>
-    </a>
+    <main>
+        <div class="painel">
+            <h1>BEM VINDO(A) {{ user.name }}</h1>
+            <div class="data">
+                <h2>Seus dados são:</h2>
+                <ul>
+                    <li>NIF:{{ user.nif }}</li>
+                    <li>CONTATO:{{ user.contact }}</li>
+                    <li>EMAIL:{{ user.email }}</li>
+                    <li>CARGO:{{ user.position }}</li>
+                    <li>TELEFONE:{{ user.contact }}</li>
+                </ul>
+            </div>
+        <a href="{{ url_for('logout') }}">
+            <button type="button" class="button-default"> Logout </button>
+        </a>
+        </div>
+    </main>
 </body>
 </html>

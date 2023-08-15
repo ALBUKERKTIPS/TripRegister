@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+main{
+    height: 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons-function{
+    width: 80%;
+    height: 60%;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: gray;
+    border-radius: 10px;
+
+}
+.bt-create-user,
+.bt-see-all-users{
+    width: 150px;
+    height: 80px;
+    background-color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

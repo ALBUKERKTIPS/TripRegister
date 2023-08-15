@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_adm.css')}}">
+    <title>ADM</title>
+</head>
+<body>
+    <main>
+        <div class="buttons-function">
+            <div class="welcome">
+                <h1>BEM VINDO(A) {{ user.name }}</h1>
+            </div>
+            <div class="bt-create-user">
+                  <a href="{{ url_for('create_account') }}">
+                      <button>
+                            Create User
+                      </button>
+                  </a>
+            </div>
+            <div class="bt-see-all-users">
+                <a href="{{ url_for('see_all_users') }}">
+                      <button>
+                            See All Users
+                      </button>
+                  </a>
+            </div>
+        <a href="{{ url_for('logout') }}">
+            <button type="button" class="button-default"> Logout </button>
+        </a>
+        </div>
+    </main>
+</body>
+</html>

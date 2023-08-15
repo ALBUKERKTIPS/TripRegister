@@ -4,7 +4,8 @@
     justify-content: space-around;
     background: #b9b9b9;
     border-radius: 10px;
-    height: 30vh;
+    height: 40vh;
+    width: 30%;
 }
 .create-account{
     border-left: black 2px solid;
@@ -26,4 +27,15 @@ body {
     width: 90%;
     justify-content: center;
     align-items: center;
+}
+form{
+    display: flex;
+    height: 70%;
+    flex-direction: column;
+    gap: 10px 1px;
+    align-items: center;
+    justify-content: center;
+}
+input#username{
+    width: 223px;
 }

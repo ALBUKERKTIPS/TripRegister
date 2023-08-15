@@ -8,15 +8,12 @@
     <title>Tagus Company</title>
 </head>
 <body>
-
         {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
                 <div class="alert" role="alert">
                     <ul class="flash-messages">
                         {% for category, message in messages %}
-                            {% if category == 'success' %}
-                                <li class="alert alert-success">{{ message }}</li>
-                            {% elif category == 'error' %}
+                            {% if category == 'error' %}
                                 <li class="alert alert-danger">{{ message }}</li>
                             {% else %}
                                 <li class="{{ category }}"> {{ message }}</li>
@@ -26,16 +23,13 @@
                 </div>
             {% endif %}
         {% endwith %}
-
     <div class="container">
         <form action="{{ url_for('login') }}" method="POST">
             {{ form.csrf_token }} <!-- Security field to the form, to validate -->
-
             <div class="form-group">
                  <label>User</label>
                 {{ form.username(class="field-user", placeholder="Your User") }}
             </div>
-
             <div class="form-group">
                 <label>Password</label>
                 {{ form.password(class="field-password", placeholder="Your Password") }}
@@ -43,12 +37,6 @@
             <button type="submit" class="button-default"> Login </button>
 
         </form>
-        <div class="create-account">
-            <h4>Don't have account yet?</h4>
-            <a href="{{ url_for('create_account') }}">
-                <button class="button-to-route-create">Sign Up NOW!</button>
-            </a>
-        </div>
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     </div>
 

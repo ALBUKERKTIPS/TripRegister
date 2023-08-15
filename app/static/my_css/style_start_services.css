@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+main{
+    height: 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.painel{
+    width: 80%;
+    height: 60%;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: gray;
+    border-radius: 10px;
+
+}
+ul{
+    list-style-type: none;
+}
+.data{
+    display:flex;
+    flex-direction: column;
+    border: 1px solid;
+    border-radius: 5px;
+    height: 90%;
+    width:50%;
+}
