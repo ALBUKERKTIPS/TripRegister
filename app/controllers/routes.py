@@ -1,3 +1,5 @@
+from functools import wraps
+
 from sqlalchemy.exc import IntegrityError
 
 from app import app, database
@@ -6,6 +8,16 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app.models.tables_db import User  # To create instance inside the route Login
 from app.models.forms import LoginForm, CreateForm  # To create instance inside the route Login
 from werkzeug.security import check_password_hash
+
+
+def adm_required(func):
+    @wraps(func)
+    def decorate_view(*args, **kwargs):
+        if current_user.is_authenticated and current_user.position == "ADM":
+            return func(*args, **kwargs)
+        else:
+            return unauthorized(401)
+    return decorate_view
 
 
 @app.route('/start-services', methods=['GET'])
@@ -51,6 +63,7 @@ def service():
 
 @app.route('/create-account', methods=['GET', 'POST'])
 @login_required  # Verify if user is Login
+@adm_required
 def create_account():
     create_form = CreateForm()
     if create_form.validate_on_submit():
@@ -82,6 +95,15 @@ def create_account():
                 database.session.commit()
                 print('SAVE IN DB!')
                 flash('Account Created Successfully', 'success')
+                # Clear the form fields after successful submission
+                create_form.nif.data = None
+                create_form.name.data = ''
+                create_form.position.data = ''
+                create_form.contact.data = None
+                create_form.email.data = ''
+                create_form.user.data = ''
+                create_form.password.data = ''
+                create_form.confirm_password.data = ''
         except IntegrityError as e:
             database.session.rollback()  # revert the process in case error ( hash or something)
             print('DON T SAVE IN DB')
@@ -89,8 +111,58 @@ def create_account():
     return render_template('register.html', create_form=create_form)
 
 
+@app.route('/edit-user/<user>', methods=['GET', 'POST'])
+@login_required
+@adm_required
+def edit_user(user):
+    user_to_edit = User.query.filter_by(user=user).first()
+
+    if user_to_edit is None:
+        flash('User not found', 'error')
+        return redirect(url_for('see_all_users'))
+
+    edit_form = CreateForm(obj=user_to_edit)
+
+    if edit_form.validate_on_submit():
+        try:
+            edit_form.populate_obj(user_to_edit)
+
+            if edit_form.password.data:
+                user_to_edit.set_password(edit_form.password.data)
+
+            database.session.commit()
+
+            flash('User data updated successfully', 'success')
+        except IntegrityError as e:
+            database.session.rollback()
+            flash('Failed to update user data. Please try again', 'error')
+
+    return render_template('edit_user.html', edit_form=edit_form, user_to_edit=user_to_edit)
+
+
+@app.route('/delete-user/<user>', methods=['GET', 'POST'])
+@login_required
+@adm_required
+def delete_user(user):
+    user_to_delete = User.query.filter_by(user=user).first()
+
+    if user_to_delete is None:
+        flash('User not Found', 'error')
+    else:
+        try:
+            database.session.delete(user_to_delete)
+            database.session.commit()
+            flash('User Deleted Successfully', 'success')
+        except:
+            database.session.rollback()
+            flash('Failed to delete user. Please try again', 'error')
+
+    return redirect(url_for('see_all_users'))
+
+
 @app.route('/see-all-users')
 @login_required  # Verify if user is Login
+@adm_required
 def see_all_users():
     users = User.query.all()
     return render_template('all_users.html', users=users)
@@ -98,6 +170,7 @@ def see_all_users():
 
 @app.route('/adm')
 @login_required  # Verify if user is Login
+@adm_required
 def administration():
     return render_template('adm.html', user=current_user)
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_new_and_edit.css')}}">
     <title>Register Now</title>
 </head>
 <body>
@@ -24,13 +24,16 @@
             {% endif %}
         {% endwith %}
     <div class="container">
-        <h1>Create an Account</h1>
+        <h1>New Employee</h1>
 
         <form action="{{ url_for('create_account') }}" method="POST">
             {{ create_form.hidden_tag() }} <!-- Security field to the form, to validate -->
             <div class="form-group">
                 <label>{{ create_form.nif.label }}</label>
                 {{ create_form.nif(class="form-control", placeholder="document") }}
+                {% for error in create_form.nif.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
             </div>
             <div class="form-group">
                 <label>{{ create_form.name.label }}</label>
@@ -43,6 +46,9 @@
             <div class="form-group">
                 <label>{{ create_form.contact.label }}</label>
                 {{ create_form.contact(class="form-control", placeholder="+351") }}
+                {% for error in create_form.contact.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
             </div>
             <div class="form-group">
                 <label>{{ create_form.email.label }}</label>
@@ -54,19 +60,28 @@
             </div>
             <div class="form-group">
                 <label>{{ create_form.password.label }}</label>
-                {{ create_form.password(class="form-control", placeholder="* * * * * *") }}
+                {{ create_form.password(class="form-control", placeholder="* * * * * * * *") }}
+                {% for error in create_form.password.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
             </div>
             <div class="form-group">
                 <label>{{ create_form.confirm_password.label }}</label>
-                {{ create_form.confirm_password(class="form-control", placeholder="* * * * * *") }}
+                {{ create_form.confirm_password(class="form-control", placeholder="* * * * * * * *") }}
+                {% for error in create_form.confirm_password.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
             </div>
-            <button type="submit" class="btn btn-primary">Create Account</button>
+            <div class="btns">
+                <button type="submit" class="btn-primary">Create Account</button>
+            </div>
         </form>
-    </div>
     <a href="{{ url_for('administration') }}">
-            <button>
-                Back to Administration
-            </button>
-        </a>
+                    <button class="back-adm">
+                        Back to Administration
+                    </button>
+                </a>
+    </div>
+
 </body>
 </html>

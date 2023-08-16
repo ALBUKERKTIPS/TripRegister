@@ -6,18 +6,11 @@
 
 body{
     display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-main{
-    height: 100vh;
-    display:flex;
     align-items: center;
     justify-content: center;
+    height: 100vh;
 }
-
-.buttons-function{
+.container{
     width: 80%;
     height: 60%;
     display:flex;
@@ -25,10 +18,9 @@ main{
     align-items: center;
     background-color: gray;
     border-radius: 10px;
-
 }
-.bt-create-user,
-.bt-see-all-users{
+
+.back-adm{
     width: 150px;
     height: 80px;
     background-color: orange;
@@ -36,7 +28,21 @@ main{
     align-items: center;
     justify-content: center;
 }
+.btn-primary{
+    width: 150px;
+    height: 80px;
+    background-color: green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.btns {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
 li.success{
     background-color: green;
 }

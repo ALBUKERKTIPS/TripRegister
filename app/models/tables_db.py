@@ -33,7 +33,8 @@ class User(database.Model, UserMixin):
 class Trip(database.Model):
     __tablename__ = "trips"
 
-    plate = database.Column(database.Integer, primary_key=True)
+    id = database.Column(database.Integer, primary_key=True)
+    plate = database.Column(database.Integer, nullable=True)
     departure_place = database.Column(database.String, nullable=True)
     arrive_place = database.Column(database.String, nullable=True)
     departure_time = database.Column(database.Time, nullable=True)
