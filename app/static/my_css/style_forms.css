@@ -2,10 +2,12 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    flex-direction: column;
     background: #b9b9b9;
     border-radius: 10px;
     height: 40vh;
     width: 30%;
+    padding: 10px;
 }
 .create-account{
     border-left: black 2px solid;
@@ -38,4 +40,9 @@ form{
 }
 input#username{
     width: 223px;
+}
+img{
+    height: 50%;
+    width: 60%;
+    border-radius: 700px;
 }

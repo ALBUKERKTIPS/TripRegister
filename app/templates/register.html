@@ -2,8 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_new_and_edit.css')}}">
     <title>Register Now</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const countryDropdown = document.querySelector('#{{ create_form.country_code.id }}');
+            const phoneNumberInput = document.querySelector('#{{ create_form.contact.id }}');
+
+            countryDropdown.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const countryCode = selectedOption.value.substr(1, 2);
+
+                countryDropdown.value = '+' + countryCode;
+
+                selectedOption.text = '+' + countryCode;
+            });
+        });
+    </script>
 </head>
 <body>
     {% with messages = get_flashed_messages(with_categories=True) %}
@@ -30,33 +47,46 @@
             {{ create_form.hidden_tag() }} <!-- Security field to the form, to validate -->
             <div class="form-group">
                 <label>{{ create_form.nif.label }}</label>
-                {{ create_form.nif(class="form-control", placeholder="document") }}
+                {{ create_form.nif(class="form-control", placeholder="Tax Identification Number") }}
                 {% for error in create_form.nif.errors %}
                     <p style="color: red;">{{ error }}</p>
                 {% endfor %}
             </div>
             <div class="form-group">
                 <label>{{ create_form.name.label }}</label>
-                {{ create_form.name(class="form-control", placeholder="full Name") }}
+                {{ create_form.name(class="form-control", placeholder="Name") }}
             </div>
             <div class="form-group">
                 <label>{{ create_form.position.label }}</label>
-                {{ create_form.position(class="form-control") }}
+                {{ create_form.position(class="form-control", placeholder="Job") }}
             </div>
             <div class="form-group">
-                <label>{{ create_form.contact.label }}</label>
-                {{ create_form.contact(class="form-control", placeholder="+351") }}
+                <label>{{ create_form.country_code.label }}</label>
+                <div class="input-group">
+                    {{ create_form.country_code(class="form-control input-group-prepend custom-dropdown") }}
+                    {{ create_form.contact(class="form-control", placeholder="Phone") }}
+                </div>
                 {% for error in create_form.contact.errors %}
                     <p style="color: red;">{{ error }}</p>
                 {% endfor %}
             </div>
             <div class="form-group">
                 <label>{{ create_form.email.label }}</label>
-                {{ create_form.email(class="form-control", placeholder="email") }}
+                {{ create_form.email(class="form-control", placeholder="email@email.com") }}
+                {% for error in create_form.email.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label>{{ create_form.confirm_email.label }}</label>
+                {{ create_form.confirm_email(class="form-control", placeholder="email@email.com") }}
+                {% for error in create_form.confirm_email.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
             </div>
             <div class="form-group">
                 <label>{{ create_form.user.label }}</label>
-                {{ create_form.user(class="form-control", placeholder="user") }}
+                {{ create_form.user(class="form-control", placeholder="User") }}
             </div>
             <div class="form-group">
                 <label>{{ create_form.password.label }}</label>

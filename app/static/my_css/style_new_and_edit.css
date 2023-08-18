@@ -9,15 +9,17 @@ body{
     align-items: center;
     justify-content: center;
     height: 100vh;
+    flex-direction: column;
 }
 .container{
     width: 80%;
-    height: 60%;
+    height: auto;
     display:flex;
     justify-content: space-around;
     align-items: center;
     background-color: gray;
     border-radius: 10px;
+    padding: 10px;
 }
 
 .back-adm{
@@ -43,9 +45,46 @@ body{
     justify-content: center;
     margin-top: 10px;
 }
-li.success{
-    background-color: green;
+.input-group-prepend {
+    flex: 0 0 auto;
 }
-li.error{
-    background-color: red;
+
+.form-control.input-group-prepend {
+    width: auto;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+}
+
+.form-control {
+    flex: 1 1 auto;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+    height: 48px;
+}
+
+.custom-dropdown {
+    max-width: 4rem; /* Adjust as needed */
+    width: auto;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+}
+
+.custom-dropdown:focus {
+    z-index: 2;
+}
+
+.custom-dropdown ~ .form-control {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+#contact.form-control{
+    border-left: 1px solid;
+}
+input,
+select{
+    margin-left: 5px;
 }

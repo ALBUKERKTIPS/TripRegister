@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_new_and_edit.css')}}">
     <title>Edit Employee</title>
 </head>
@@ -24,53 +26,55 @@
             {% endif %}
         {% endwith %}
 <div class="container">
-    <h1>Edit User Data</h1>
+    <h1>Edit Employee {{ current_user.name }}</h1>
       <form method="POST" action="{{ url_for('edit_user', user=user_to_edit.user) }}">
-        {{ edit_form.hidden_tag() }}<!-- Security field to the form, to validate -->
-        <div class="form-group">
-            <label>{{ edit_form.nif.label }}</label>
-            {{ edit_form.nif(class="form-control", placeholder="document") }}
-            {% for error in edit_form.nif.errors %}
-                <p style="color: red;">{{ error }}</p>
-            {% endfor %}
-        </div>
-        <div class="form-group">
-            <label>{{ edit_form.name.label }}</label>
-                {{ edit_form.name(class="form-control", placeholder="name") }}
-        </div>
-        <div class="form-group">
-            <label>{{ edit_form.position.label }}</label>
-            {{ edit_form.position(class="form-control") }}
-        </div>
-        <div class="form-group">
-            <label>{{ edit_form.contact.label }}</label>
-            {{ edit_form.contact(class="form-control", placeholder="+351") }}
-            {% for error in edit_form.contact.errors %}
-                <p style="color: red;">{{ error }}</p>
-            {% endfor %}
-        </div>
-        <div class="form-group">
-            <label>{{ edit_form.email.label }}</label>
-            {{ edit_form.email(class="form-control", placeholder="email") }}
-        </div>
-        <div class="form-group">
-            <label>{{ edit_form.user.label }}</label>
-            {{ edit_form.user(class="form-control", placeholder="user") }}
-        </div>
-        <div class="form-group">
-            <label>{{ edit_form.password.label.text.replace("Password", "NEW Password")}}</label>
-            {{ edit_form.password(class="form-control", placeholder="* * * * * * * *") }}
-            {% for error in edit_form.password.errors %}
-                <p style="color: red;">{{ error }}</p>
-            {% endfor %}
-        </div>
-        <div class="form-group">
-            <label>{{ edit_form.confirm_password.label.text.replace("Confirm your password", "Confirm your NEW Password")}}</label>
-            {{ edit_form.confirm_password(class="form-control", placeholder="* * * * * * * *") }}
-            {% for error in edit_form.confirm_password.errors %}
-                <p style="color: red;">{{ error }}</p>
-            {% endfor %}
-        </div>
+        {{ edit_form.hidden_tag() }} <!-- Security field to the form, to validate -->
+            <div class="form-group">
+                <label>{{ edit_form.name.label }}</label>
+                {{ edit_form.name(class="form-control", placeholder="NEW Name") }}
+            </div>
+            <div class="form-group">
+                <label>{{ edit_form.position.label }}</label>
+                {{ edit_form.position(class="form-control", placeholder="NEW Job") }}
+            </div>
+            <div class="form-group">
+                <label>{{ edit_form.country_code.label }}</label>
+                <div class="input-group">
+                    {{ edit_form.country_code(class="form-control input-group-prepend custom-dropdown") }}
+                    {{ edit_form.contact(class="form-control", placeholder="NEW Phone") }}
+                </div>
+                {% for error in edit_form.contact.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label>{{ edit_form.email.label }}</label>
+                {{ edit_form.email(class="form-control", placeholder="NEWemail@email.com") }}
+                {% for error in edit_form.email.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label>{{ edit_form.confirm_email.label }}</label>
+                {{ edit_form.confirm_email(class="form-control", placeholder="NEWemail@email.com") }}
+                {% for error in edit_form.confirm_email.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label>{{ edit_form.password.label }}</label>
+                {{ edit_form.password(class="form-control", placeholder="NEW Password") }}
+                {% for error in edit_form.password.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label>{{ edit_form.confirm_password.label }}</label>
+                {{ edit_form.confirm_password(class="form-control", placeholder="NEW Password") }}
+                {% for error in edit_form.confirm_password.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
         <div class="btns">
           <button type="submit" class="btn-primary">Update</button>
         </div>

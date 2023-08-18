@@ -1,8 +1,9 @@
 from functools import wraps
 
+from flask_mail import Message
 from sqlalchemy.exc import IntegrityError
 
-from app import app, database
+from app import app, database, mail
 from flask import render_template, flash, redirect, url_for, abort
 from flask_login import login_user, logout_user, current_user, login_required
 from app.models.tables_db import User  # To create instance inside the route Login
@@ -93,7 +94,11 @@ def create_account():
                 new_user.set_password(create_form.password.data)  # Making Hash
                 database.session.add(new_user)
                 database.session.commit()
-                print('SAVE IN DB!')
+
+                msg = Message('Cadastrado Com Sucesso', recipients=[new_user.email])
+                msg.html = render_template('email/create_notification.html', user=new_user)
+                mail.send(msg)
+
                 flash('Account Created Successfully', 'success')
                 # Clear the form fields after successful submission
                 create_form.nif.data = None
@@ -131,6 +136,10 @@ def edit_user(user):
                 user_to_edit.set_password(edit_form.password.data)
 
             database.session.commit()
+
+            msg = Message('Dados Cadastrais Atualizados', recipients=[user_to_edit.email])
+            msg.html = render_template('email/update_notification.html', user=user_to_edit)
+            mail.send(msg)
 
             flash('User data updated successfully', 'success')
         except IntegrityError as e:
