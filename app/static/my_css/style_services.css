@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+}
+.container{
+    width: auto;
+    height: auto;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: gray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.back-adm{
+    width: 150px;
+    height: 80px;
+    background-color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-primary{
+    width: 150px;
+    height: 80px;
+    background-color: green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btns {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.input-group-prepend {
+    flex: 0 0 auto;
+}
+
+.form-control.input-group-prepend {
+    width: auto;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+}
+
+.form-control {
+    flex: 1 1 auto;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+    height: 48px;
+}
+
+.custom-dropdown {
+    max-width: 4rem; /* Adjust as needed */
+    width: auto;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+}
+
+.custom-dropdown:focus {
+    z-index: 2;
+}
+
+.custom-dropdown ~ .form-control {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+#contact.form-control{
+    border-left: 1px solid;
+}
+input,
+select{
+    margin-left: 5px;
+}
+form{
+    width: auto;
+}
+.top-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 563px;
+}
+.center-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.right-side-form{
+    margin-left: 10px;
+    border-left: 1px solid black;
+}
+.bottom-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+label{
+    width: 4rem;
+    margin-left: 5px;
+}
+.back-profile{
+    background-color: orange;
+    margin-top: 5px;
+}

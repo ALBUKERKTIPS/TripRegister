@@ -28,13 +28,15 @@ main{
 
 }
 .bt-create-user,
-.bt-see-all-users{
+.bt-see-all-users,
+.bt-see-all-trips{
     width: 150px;
     height: 80px;
     background-color: orange;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 25px;
 }
 
 li.success{
@@ -42,4 +44,10 @@ li.success{
 }
 li.error{
     background-color: red;
+}
+.right-side-adm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

@@ -30,10 +30,10 @@ class User(database.Model, UserMixin):
         self.password = None
 
 
-class Trip(database.Model):
+class Trip(database.Model, UserMixin):
     __tablename__ = "trips"
 
-    id = database.Column(database.Integer, primary_key=True)
+    id = database.Column(database.Integer, primary_key=True, autoincrement=True)
     plate = database.Column(database.Integer, nullable=True)
     departure_place = database.Column(database.String, nullable=True)
     arrive_place = database.Column(database.String, nullable=True)
@@ -45,3 +45,17 @@ class Trip(database.Model):
     arrive_fuel = database.Column(database.String, nullable=True)
     service = database.Column(database.String, nullable=True)
     user = database.Column(database.String, nullable=True)
+
+    def __init__(self, plate, departure_place, arrive_place, departure_time, arrive_time, departure_miles,
+                 arrive_miles, departure_fuel, arrive_fuel, service, user):
+        self.plate = plate
+        self.departure_place = departure_place
+        self.arrive_place = arrive_place
+        self.departure_time = departure_time
+        self.arrive_time = arrive_time
+        self.departure_miles = departure_miles
+        self.arrive_miles = arrive_miles
+        self.departure_fuel = departure_fuel
+        self.arrive_fuel = arrive_fuel
+        self.service = service
+        self.user = user

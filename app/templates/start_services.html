@@ -9,9 +9,12 @@
 </head>
 <body>
     <main>
-        <div class="painel">
+        <div class="painel" style="flex-direction: column;">
             <h1>BEM VINDO(A) {{ user.name }}</h1>
-            <div class="data">
+                <a href="{{ url_for('service') }}">
+                    <button type="button" class="button-default" style="font-size: 2rem;"> START WORK! </button>
+                </a>
+            <div class="data" style="margin-top: 10px;">
                 <h2>Seus dados são:</h2>
                 <ul>
                     <li>NIF:{{ user.nif }}</li>

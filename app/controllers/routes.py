@@ -6,8 +6,8 @@ from sqlalchemy.exc import IntegrityError
 from app import app, database, mail
 from flask import render_template, flash, redirect, url_for, abort
 from flask_login import login_user, logout_user, current_user, login_required
-from app.models.tables_db import User  # To create instance inside the route Login
-from app.models.forms import LoginForm, CreateForm  # To create instance inside the route Login
+from app.models.tables_db import User, Trip  # To create instance inside the route Login
+from app.models.forms import LoginForm, CreateForm, ServicesCheckinCheckout  # To create instance inside the route Login
 from werkzeug.security import check_password_hash
 
 
@@ -56,10 +56,30 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/services')
+@app.route('/services', methods=['GET', 'POST'])
 @login_required  # Verify if user is Login
 def service():
-    render_template("services.html")
+    services_form = ServicesCheckinCheckout()
+    if services_form.validate_on_submit():
+        try:  # Verify and save if exist the same
+            new_service = Trip(plate=services_form.plate.data,
+                               departure_place=services_form.departure_place.data,
+                               arrive_place=services_form.arrive_place.data,
+                               departure_time=services_form.departure_time.data,
+                               arrive_time=services_form.arrive_time.data,
+                               departure_miles=services_form.departure_miles.data,
+                               arrive_miles=services_form.arrive_miles.data,
+                               departure_fuel=services_form.departure_fuel.data,
+                               arrive_fuel=services_form.arrive_fuel.data,
+                               service=services_form.service.data,
+                               user=current_user.name)
+            database.session.add(new_service)
+            database.session.commit()
+            flash('Service Save Successfully', 'success')
+        except IntegrityError as e:
+            database.session.rollback()  # revert the process in case error
+            flash('Failed Save Service. Please try again', 'error')
+    return render_template('services.html', services_form=services_form)
 
 
 @app.route('/create-account', methods=['GET', 'POST'])
@@ -175,6 +195,14 @@ def delete_user(user):
 def see_all_users():
     users = User.query.all()
     return render_template('all_users.html', users=users)
+
+
+@app.route('/see-all-trips')
+@login_required  # Verify if user is Login
+@adm_required
+def see_all_trips():
+    trips = Trip.query.all()
+    return render_template('all_trips.html', trips=trips)
 
 
 @app.route('/adm')
