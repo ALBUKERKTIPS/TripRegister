@@ -14,15 +14,21 @@
                 <a href="{{ url_for('service') }}">
                     <button type="button" class="button-default" style="font-size: 2rem;"> START WORK! </button>
                 </a>
-            <div class="data" style="margin-top: 10px;">
-                <h2>Seus dados são:</h2>
-                <ul>
-                    <li>NIF:{{ user.nif }}</li>
-                    <li>CONTATO:{{ user.contact }}</li>
-                    <li>EMAIL:{{ user.email }}</li>
-                    <li>CARGO:{{ user.position }}</li>
-                    <li>TELEFONE:{{ user.contact }}</li>
-                </ul>
+            <div class="data" style="margin-top: 10px; display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+                <div class="info">
+                    <h2>Seus dados são:</h2>
+                    <ul>
+                        <li>NIF:{{ user.nif }}</li>
+                        <li>CONTATO:{{ user.contact }}</li>
+                        <li>EMAIL:{{ user.email }}</li>
+                        <li>CARGO:{{ user.position }}</li>
+                        <li>TELEFONE:{{ user.contact }}</li>
+                    </ul>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
             </div>
         <a href="{{ url_for('logout') }}">
             <button type="button" class="button-default"> Logout </button>

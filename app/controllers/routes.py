@@ -4,7 +4,7 @@ from flask_mail import Message
 from sqlalchemy.exc import IntegrityError
 
 from app import app, database, mail
-from flask import render_template, flash, redirect, url_for, abort
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from app.models.tables_db import User, Trip  # To create instance inside the route Login
 from app.models.forms import LoginForm, CreateForm, ServicesCheckinCheckout  # To create instance inside the route Login
@@ -72,10 +72,12 @@ def service():
                                departure_fuel=services_form.departure_fuel.data,
                                arrive_fuel=services_form.arrive_fuel.data,
                                service=services_form.service.data,
-                               user=current_user.name)
+                               user=current_user.user)
             database.session.add(new_service)
             database.session.commit()
             flash('Service Save Successfully', 'success')
+            # Clear form data and flash messages after successful submission
+            return redirect(url_for('service'))
         except IntegrityError as e:
             database.session.rollback()  # revert the process in case error
             flash('Failed Save Service. Please try again', 'error')
@@ -83,8 +85,6 @@ def service():
 
 
 @app.route('/create-account', methods=['GET', 'POST'])
-@login_required  # Verify if user is Login
-@adm_required
 def create_account():
     create_form = CreateForm()
     if create_form.validate_on_submit():
@@ -201,7 +201,32 @@ def see_all_users():
 @login_required  # Verify if user is Login
 @adm_required
 def see_all_trips():
-    trips = Trip.query.all()
+    search_query = request.args.get('search_query', '').strip()
+    user_filter = 'search_by_user' in request.args
+    plate_filter = 'search_by_plate' in request.args
+    all_filter = 'search_all' in request.args
+
+    trips_query = Trip.query
+
+    if search_query:
+        if not user_filter and not plate_filter and not all_filter:
+            flash('Please select at last one filter option', 'error')
+        else:
+            if user_filter:
+                users = User.query.filter(User.user.contains(search_query)).all()
+                trips_query = trips_query.filter(Trip.user.in_([username.user for username in users]))
+            elif plate_filter:
+                try:
+                    plate_query = int(search_query)
+                    trips_query = trips_query.filter(Trip.plate == int(search_query))
+                except ValueError:
+                    flash('Invalid input for plate filter(ONLY NUMBERS)', 'error')
+                    return redirect(url_for('see_all_trips'))
+    else:
+        if all_filter:
+            trips = trips_query.all()
+
+    trips = trips_query.all()
     return render_template('all_trips.html', trips=trips)
 
 

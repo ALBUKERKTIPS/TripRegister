@@ -14,7 +14,7 @@ app.config['MAIL_PORT'] = 587  # SMTP port
 app.config['MAIL_USE_TLS'] = True  # Use TLS
 app.config['MAIL_USERNAME'] = 'taguscompany@gmail.com'
 app.config['MAIL_PASSWORD'] = 'nsljqhzyeoegtuhn'
-app.config['MAIL_DEFAULT_SENDER'] = ('Your App', 'taguscompany@gmail.com')  # Default sender for emails
+app.config['MAIL_DEFAULT_SENDER'] = ('Albukerk Company', 'taguscompany@gmail.com')  # Default sender for emails
 
 database = SQLAlchemy(app)
 login_manager = LoginManager(app)

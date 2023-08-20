@@ -15,7 +15,6 @@
     flex-direction: column;
     align-items: center;
 }
-
 table {
     border-collapse: collapse;
     width: 100%;
@@ -29,6 +28,7 @@ th, td {
 }
 th {
     background-color: #f2f2f2;
+    font-size: 11px;
 }
 td.delete{
     background-color: brown;
@@ -43,4 +43,7 @@ td.edit{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.all-table-form{
+    overflow: auto;
 }

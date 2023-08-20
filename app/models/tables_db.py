@@ -13,6 +13,7 @@ class User(database.Model, UserMixin):
     email = database.Column(database.String, nullable=True, unique=True)
     user = database.Column(database.String, nullable=True, unique=True)
     password = database.Column(database.String, nullable=True)
+    trips = database.relationship('Trip', back_populates='user_object', lazy='dynamic')
 
     def get_id(self):
         return str(self.nif)
@@ -44,7 +45,9 @@ class Trip(database.Model, UserMixin):
     departure_fuel = database.Column(database.String, nullable=True)
     arrive_fuel = database.Column(database.String, nullable=True)
     service = database.Column(database.String, nullable=True)
+    user_id = database.Column(database.Integer, database.ForeignKey('users.nif'))  # Key to reference with column Id(Users DB)
     user = database.Column(database.String, nullable=True)
+    user_object = database.relationship('User', back_populates='trips')
 
     def __init__(self, plate, departure_place, arrive_place, departure_time, arrive_time, departure_miles,
                  arrive_miles, departure_fuel, arrive_fuel, service, user):
@@ -59,3 +62,4 @@ class Trip(database.Model, UserMixin):
         self.arrive_fuel = arrive_fuel
         self.service = service
         self.user = user
+

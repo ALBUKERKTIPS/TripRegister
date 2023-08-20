@@ -8,7 +8,9 @@
     <title>Title</title>
 </head>
 <body>
-    {% with messages = get_flashed_messages(with_categories=True) %}
+<div class="container">
+    <div class="all-table">
+        {% with messages = get_flashed_messages(with_categories=True) %}
         {% if messages %}
             <div class="alert" role="alert">
                 <ul class="flash-messsages">
@@ -25,31 +27,64 @@
             </div>
         {% endif %}
     {% endwith %}
-<div class="container">
-    <div class="all-table">
         <h1>All Trips</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                </tbody>
-            </table>
+        <div class="search-bar" style="border: 1px solid black; border-radius: 5px; background-color: yellow; padding: 5px; margin-bottom: 5px;">
+            <form method="get" action="{{ url_for('see_all_trips') }}">
+                <label for="search">FILTER</label>
+                <input type="text" id="search" name="search_query" placeholder="Type Here...">
+                <label><input type="checkbox" name="search_by_user">User</label>
+                <label><input type="checkbox" name="search_by_plate">Plate</label>
+                <label><input type="checkbox" name="search_all">All</label>
+                <button type="submit">Filter!</button>
+            </form>
+        </div>
+            <div class="all-table-form">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>PLATE</th>
+                            <th>CHECK-IN</th>
+                            <th>CHECK-OUT</th>
+                            <th>CHECK-IN TIME</th>
+                            <th>CHECK-OUT TIME</th>
+                            <th>CHECK-IN MILES</th>
+                            <th>CHECK-OUT MILES</th>
+                            <th>CHECK-IN FUEL</th>
+                            <th>CHECK-OUT FUEL</th>
+                            <th>SERVICE</th>
+                            <th>EMPLOYEE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if trips %}
+                            {% for trip in trips %}
+                            <tr>
+                                <td>{{ trip.id }}</td>
+                                <td>{{ trip.plate }}</td>
+                                <td>{{ trip.departure_place }}</td>
+                                <td>{{ trip.arrive_place }}</td>
+                                <td>{{ trip.departure_time }}</td>
+                                <td>{{ trip.arrive_time }}</td>
+                                <td>{{ trip.departure_miles }}</td>
+                                <td>{{ trip.arrive_miles }}</td>
+                                <td>{{ trip.departure_fuel }}</td>
+                                <td>{{ trip.arrive_fuel }}</td>
+                                <td>{{ trip.service }}</td>
+                                <td>{{ trip.user }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="12">Nenhum resultado encontrado.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        <a href="{{ url_for('administration') }}">
+            <button class="btn-back">Back to Administration</button>
+        </a>
     </div>
 </div>
 </body>
