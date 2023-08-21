@@ -61,26 +61,54 @@ def logout():
 def service():
     services_form = ServicesCheckinCheckout()
     if services_form.validate_on_submit():
-        try:  # Verify and save if exist the same
-            new_service = Trip(plate=services_form.plate.data,
-                               departure_place=services_form.departure_place.data,
-                               arrive_place=services_form.arrive_place.data,
-                               departure_time=services_form.departure_time.data,
-                               arrive_time=services_form.arrive_time.data,
-                               departure_miles=services_form.departure_miles.data,
-                               arrive_miles=services_form.arrive_miles.data,
-                               departure_fuel=services_form.departure_fuel.data,
-                               arrive_fuel=services_form.arrive_fuel.data,
-                               service=services_form.service.data,
-                               user=current_user.user)
-            database.session.add(new_service)
-            database.session.commit()
-            flash('Service Save Successfully', 'success')
-            # Clear form data and flash messages after successful submission
-            return redirect(url_for('service'))
-        except IntegrityError as e:
-            database.session.rollback()  # revert the process in case error
-            flash('Failed Save Service. Please try again', 'error')
+        # Custom validations:
+        # Check if departure_place and arrive_place are equal
+        # Check if departure_time and arrive_time are equal
+        # Check if departure_miles and arrive_miles are equal
+        if services_form.departure_place.data == services_form.arrive_place.data:
+            flash('Departure place and arrive place cannot be the same.', 'error')
+        elif services_form.departure_time.data == services_form.arrive_time.data or services_form.departure_time.data > services_form.arrive_time.data:
+            flash('Departure time and arrive time cannot be the same. or Departure < Arrive', 'error')
+        elif services_form.departure_miles.data == services_form.arrive_miles.data or services_form.departure_miles.data > services_form.arrive_miles.data:
+            flash('Departure miles and arrive miles cannot be the same. or Departure < Arrive', 'error')
+        else:
+            existing_service = Trip.query.filter_by(
+                plate=services_form.plate.data,
+                departure_place=services_form.departure_place.data,
+                arrive_place=services_form.arrive_place.data,
+                departure_time=services_form.departure_time.data,
+                arrive_time=services_form.arrive_time.data,
+                departure_miles=services_form.departure_miles.data,
+                arrive_miles=services_form.arrive_miles.data,
+                departure_fuel=services_form.departure_fuel.data,
+                arrive_fuel=services_form.arrive_fuel.data,
+                service=services_form.service.data,
+                user=current_user.user
+            ).first()
+
+            if existing_service:
+                flash('An Identical service entry already exists in the database', 'error')
+            else:
+                try:  # Verify and save if exist the same
+                    new_service = Trip(plate=services_form.plate.data,
+                                       departure_place=services_form.departure_place.data,
+                                       arrive_place=services_form.arrive_place.data,
+                                       departure_time=services_form.departure_time.data,
+                                       arrive_time=services_form.arrive_time.data,
+                                       departure_miles=services_form.departure_miles.data,
+                                       arrive_miles=services_form.arrive_miles.data,
+                                       departure_fuel=services_form.departure_fuel.data,
+                                       arrive_fuel=services_form.arrive_fuel.data,
+                                       service=services_form.service.data,
+                                       user=current_user.user)
+                    database.session.add(new_service)
+                    database.session.commit()
+                    flash('Service Save Successfully', 'success')
+                    # Clear form data and flash messages after successful submission
+                    return redirect(url_for('service'))
+                except IntegrityError as e:
+                    database.session.rollback()  # revert the process in case error
+                    flash('Failed Save Service. Please try again', 'error')
     return render_template('services.html', services_form=services_form)
 
 
@@ -121,14 +149,7 @@ def create_account():
 
                 flash('Account Created Successfully', 'success')
                 # Clear the form fields after successful submission
-                create_form.nif.data = None
-                create_form.name.data = ''
-                create_form.position.data = ''
-                create_form.contact.data = None
-                create_form.email.data = ''
-                create_form.user.data = ''
-                create_form.password.data = ''
-                create_form.confirm_password.data = ''
+                return redirect(url_for('create_account'))
         except IntegrityError as e:
             database.session.rollback()  # revert the process in case error ( hash or something)
             print('DON T SAVE IN DB')
