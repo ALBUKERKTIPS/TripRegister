@@ -1,6 +1,7 @@
 from app import database
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash
+from datetime import datetime
 
 
 class User(database.Model, UserMixin):
@@ -35,6 +36,7 @@ class Trip(database.Model, UserMixin):
     __tablename__ = "trips"
 
     id = database.Column(database.Integer, primary_key=True, autoincrement=True)
+    trip_date = database.Column(database.Date, nullable=True, default=datetime.utcnow())
     plate = database.Column(database.Integer, nullable=True)
     departure_place = database.Column(database.String, nullable=True)
     arrive_place = database.Column(database.String, nullable=True)
@@ -50,7 +52,7 @@ class Trip(database.Model, UserMixin):
     user_object = database.relationship('User', back_populates='trips')
 
     def __init__(self, plate, departure_place, arrive_place, departure_time, arrive_time, departure_miles,
-                 arrive_miles, departure_fuel, arrive_fuel, service, user):
+                 arrive_miles, departure_fuel, arrive_fuel, service, user_id, user):
         self.plate = plate
         self.departure_place = departure_place
         self.arrive_place = arrive_place
@@ -61,5 +63,6 @@ class Trip(database.Model, UserMixin):
         self.departure_fuel = departure_fuel
         self.arrive_fuel = arrive_fuel
         self.service = service
+        self.user_id = user_id
         self.user = user
 

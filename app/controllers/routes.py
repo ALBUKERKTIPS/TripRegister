@@ -1,3 +1,4 @@
+from datetime import datetime
 from functools import wraps
 
 from flask_mail import Message
@@ -100,6 +101,7 @@ def service():
                                        departure_fuel=services_form.departure_fuel.data,
                                        arrive_fuel=services_form.arrive_fuel.data,
                                        service=services_form.service.data,
+                                       user_id=current_user.nif,  # Here me forgot to put tem user_id in constructor, and then i fix, the problem
                                        user=current_user.user)
                     database.session.add(new_service)
                     database.session.commit()
@@ -113,6 +115,8 @@ def service():
 
 
 @app.route('/create-account', methods=['GET', 'POST'])
+@login_required
+@adm_required
 def create_account():
     create_form = CreateForm()
     if create_form.validate_on_submit():
@@ -249,6 +253,34 @@ def see_all_trips():
 
     trips = trips_query.all()
     return render_template('all_trips.html', trips=trips)
+
+
+@app.route('/see-all-trips-user', methods=['GET', 'POST'])
+@login_required
+def see_all_trips_user():
+    search_query = request.args.get('search_query', '').strip()
+    plate_filter = 'search_query' in request.args
+    all_filter = 'search_query' in request.args
+
+    trips_query = Trip.query.filter_by(user_id=current_user.nif)
+
+    if search_query:
+        if not plate_filter and not all_filter:
+            flash('Please select at last one filter option', 'error')
+        else:
+            if plate_filter:
+                try:
+                    plate_query = int(search_query)
+                    trips_query = trips_query.filter(Trip.plate == plate_query)
+                except ValueError:
+                    flash('Invalid input for plate filter (ONLY NUMBERS', 'error')
+                    return redirect(url_for('see_all_trips_user'))
+    else:
+        if all_filter:
+            trips_query = Trip.query.filter_by(user_id=current_user.nif)
+
+    trips_current_user = trips_query.all()
+    return render_template('all_trips_user.html', trips_current_user=trips_current_user)
 
 
 @app.route('/adm')

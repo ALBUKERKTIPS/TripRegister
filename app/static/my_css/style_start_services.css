@@ -38,3 +38,11 @@ ul{
     height: 90%;
     width:50%;
 }
+.btn-back{
+    width: 150px;
+    height: 80px;
+    background-color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

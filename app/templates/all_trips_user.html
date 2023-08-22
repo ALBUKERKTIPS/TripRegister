@@ -27,12 +27,11 @@
             </div>
         {% endif %}
     {% endwith %}
-        <h1>All Trips</h1>
+        <h1>Your Trips</h1>
         <div class="search-bar" style="border: 1px solid black; border-radius: 5px; background-color: yellow; padding: 5px; margin-bottom: 5px;">
-            <form method="get" action="{{ url_for('see_all_trips') }}">
+            <form method="get" action="{{ url_for('see_all_trips_user') }}">
                 <label for="search">FILTER</label>
                 <input type="text" id="search" name="search_query" placeholder="Type Here...">
-                <label><input type="checkbox" name="search_by_user">User</label>
                 <label><input type="checkbox" name="search_by_plate">Plate</label>
                 <label><input type="checkbox" name="search_all">All</label>
                 <button type="submit">Filter!</button>
@@ -54,12 +53,11 @@
                             <th>CHECK-IN FUEL</th>
                             <th>CHECK-OUT FUEL</th>
                             <th>SERVICE</th>
-                            <th>EMPLOYEE</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% if trips %}
-                            {% for trip in trips %}
+                        {% if trips_current_user %}
+                            {% for trip in trips_current_user %}
                             <tr>
                                 <td>{{ trip.id }}</td>
                                 <td>{{ trip.plate }}</td>
@@ -73,7 +71,6 @@
                                 <td>{{ trip.departure_fuel }}</td>
                                 <td>{{ trip.arrive_fuel }}</td>
                                 <td>{{ trip.service }}</td>
-                                <td>{{ trip.user }}</td>
                             </tr>
                             {% endfor %}
                         {% else %}
@@ -84,8 +81,8 @@
                     </tbody>
                 </table>
             </div>
-        <a href="{{ url_for('administration') }}">
-            <button class="btn-back">Back to Administration</button>
+        <a href="{{ url_for('start_services') }}">
+            <button class="btn-back">Back to Your Profile</button>
         </a>
     </div>
 </div>
