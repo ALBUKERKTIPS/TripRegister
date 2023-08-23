@@ -4,9 +4,10 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp, Val
 import pycountry
 
 
-def nif_and_contact_length_check(form, field):
-    if field.data is not None and len(str(field.data)) < 9:
-        raise ValidationError('Deve conter pelo menos 9 números VÁLIDOS')
+def nif_and_contact_length_check(field):
+    data = str(field.data)
+    if len(data) != 9 or not data.isdigit():
+        raise ValidationError('Must contain 9 valid numbers')
 
 
 class LoginForm(FlaskForm):
@@ -27,11 +28,19 @@ class CreateForm(FlaskForm):
     country_code = SelectField("Contact", choices=country_code_choices, validators=[DataRequired()])
     contact = IntegerField("Phone Number", validators=[DataRequired(), nif_and_contact_length_check])
     email = EmailField("Email", validators=[DataRequired(), Email()])
-    confirm_email = EmailField("Confirm Email", validators=[DataRequired(), EqualTo('email', message='Email não são iguais')])
+    confirm_email = EmailField("Confirm Email",
+                               validators=[DataRequired(), EqualTo('email', message='Emails are different')])
     user = StringField("Username", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=8, message="Password must be at least 6 characters long"),
-                                                     Regexp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$', message="Senha deve conter pelo menos 1 LETRA MAIUSCULA, pelo menos 1 NÚMERO, e pelo menos 1 CARACTERE ESPECIAL")])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='As senhas não são iguais')])
+    password = PasswordField("Password",
+                             validators=[DataRequired(),
+                                         Length(min=8, message="Password must be at least 8 characters long"),
+                                         Regexp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$',
+                                                message="Password must contain at least 1 UPPERCASE LETTER, "
+                                                        "at least 1 NUMBER, "
+                                                        "and at least 1 ESPECIAL CHARACTER")])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(),
+                                                 EqualTo('password', message='Passwords are different')])
     submit = SubmitField('Create')
 
 

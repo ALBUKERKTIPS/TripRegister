@@ -22,7 +22,7 @@ class User(database.Model, UserMixin):
     def set_password(self, password):  # Function to register and make hash password
         self.password = generate_password_hash(password)
 
-    def __init__(self, nif, name, position, contact, email, user):
+    def __init__(self, nif, name=None, position=None, contact=None, email=None, user=None):
         self.nif = nif
         self.name = name
         self.position = position
@@ -36,7 +36,7 @@ class Trip(database.Model, UserMixin):
     __tablename__ = "trips"
 
     id = database.Column(database.Integer, primary_key=True, autoincrement=True)
-    trip_date = database.Column(database.Date, nullable=True, default=datetime.utcnow())
+    trip_date = database.Column(database.Date, nullable=True, default=datetime.utcnow)
     plate = database.Column(database.Integer, nullable=True)
     departure_place = database.Column(database.String, nullable=True)
     arrive_place = database.Column(database.String, nullable=True)
@@ -47,7 +47,7 @@ class Trip(database.Model, UserMixin):
     departure_fuel = database.Column(database.String, nullable=True)
     arrive_fuel = database.Column(database.String, nullable=True)
     service = database.Column(database.String, nullable=True)
-    user_id = database.Column(database.Integer, database.ForeignKey('users.nif'))  # Key to reference with column Id(Users DB)
+    user_id = database.Column(database.Integer, database.ForeignKey('users.nif'))  # To reference with column Id(Users)
     user = database.Column(database.String, nullable=True)
     user_object = database.relationship('User', back_populates='trips')
 
@@ -65,4 +65,3 @@ class Trip(database.Model, UserMixin):
         self.service = service
         self.user_id = user_id
         self.user = user
-

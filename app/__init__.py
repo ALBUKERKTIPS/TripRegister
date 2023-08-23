@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy  # Tools to use the Database, using objects Python
-from flask_login import LoginManager, UserMixin  # Help to manager the user authentication, implement methods # and property for a user model
+from flask_login import LoginManager  # Help to manager the user authentication
 from flask_mail import Mail
 
 

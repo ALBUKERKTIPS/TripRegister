@@ -1,17 +1,17 @@
-from datetime import datetime
 from functools import wraps
 
-from flask_mail import Message
-from sqlalchemy.exc import IntegrityError
-
-from app import app, database, mail
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
-from app.models.tables_db import User, Trip  # To create instance inside the route Login
-from app.models.forms import LoginForm, CreateForm, ServicesCheckinCheckout  # To create instance inside the route Login
+from flask_mail import Message
+from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash
 
+from app import app, database, mail
+from app.models.forms import LoginForm, CreateForm, ServicesCheckinCheckout
+from app.models.tables_db import User, Trip
 
+
+# Decorator for ADM-required routes
 def adm_required(func):
     @wraps(func)
     def decorate_view(*args, **kwargs):
@@ -31,15 +31,16 @@ def start_services():
 @app.route('/login', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated and current_user.position == "ADM":  # If user is authenticated , don't need login
-        redirect(url_for('administration'))
-    else:
-        redirect(url_for('start_services'))
+    if current_user.is_authenticated:  # If user is authenticated , don't need login
+        if current_user.position == "ADM":
+            redirect(url_for('administration'))
+        else:
+            redirect(url_for('start_services'))
 
     form = LoginForm()
     if form.validate_on_submit():  # Before receive the information, check the fields
         find_user = User.query.filter_by(user=form.username.data).first()  # Asking about username in database
-        if find_user and check_password_hash(find_user.password, form.password.data):  # Verify Data User and Pass is in User Data
+        if find_user and check_password_hash(find_user.password, form.password.data):  # Verify Data User and Pass
             login_user(find_user)  # Start Session
             if find_user.position == 'ADM':
                 return redirect(url_for('administration'))
@@ -63,15 +64,15 @@ def service():
     services_form = ServicesCheckinCheckout()
     if services_form.validate_on_submit():
         # Custom validations:
-        # Check if departure_place and arrive_place are equal
-        # Check if departure_time and arrive_time are equal
-        # Check if departure_miles and arrive_miles are equal
         if services_form.departure_place.data == services_form.arrive_place.data:
             flash('Departure place and arrive place cannot be the same.', 'error')
-        elif services_form.departure_time.data == services_form.arrive_time.data or services_form.departure_time.data > services_form.arrive_time.data:
+        elif (services_form.departure_time.data == services_form.arrive_time.data or
+              services_form.departure_time.data > services_form.arrive_time.data):
             flash('Departure time and arrive time cannot be the same. or Departure < Arrive', 'error')
-        elif services_form.departure_miles.data == services_form.arrive_miles.data or services_form.departure_miles.data > services_form.arrive_miles.data:
+        elif (services_form.departure_miles.data == services_form.arrive_miles.data or
+              services_form.departure_miles.data > services_form.arrive_miles.data):
             flash('Departure miles and arrive miles cannot be the same. or Departure < Arrive', 'error')
+        # print("Validated services_form") TO DEBUG
         else:
             existing_service = Trip.query.filter_by(
                 plate=services_form.plate.data,
@@ -101,15 +102,16 @@ def service():
                                        departure_fuel=services_form.departure_fuel.data,
                                        arrive_fuel=services_form.arrive_fuel.data,
                                        service=services_form.service.data,
-                                       user_id=current_user.nif,  # Here me forgot to put tem user_id in constructor, and then i fix, the problem
+                                       user_id=current_user.nif,  # Here me forgot to put the user_id in constructor
                                        user=current_user.user)
                     database.session.add(new_service)
                     database.session.commit()
                     flash('Service Save Successfully', 'success')
-                    # Clear form data and flash messages after successful submission
+                    # print("Added new_service to database") TO DEBUG
                     return redirect(url_for('service'))
                 except IntegrityError as e:
-                    database.session.rollback()  # revert the process in case error
+                    database.session.rollback()  # Revert the process in case error
+                    print("Failed to save the Service:", e)
                     flash('Failed Save Service. Please try again', 'error')
     return render_template('services.html', services_form=services_form)
 
@@ -127,13 +129,13 @@ def create_account():
             duplicate_nif = User.query.filter_by(nif=create_form.nif.data).first()
 
             if duplicate_user:
-                flash('User que você escolheu já está cadastrado.', 'error')
+                flash('User you have chosen is already registered', 'error')
             if duplicate_email:
-                flash('Email que você escolheu já está cadastrado.', 'error')
+                flash('Email you have chosen is already registered', 'error')
             if duplicate_contact:
-                flash('Contact que você escolheu já está cadastrado.', 'error')
+                flash('Contact you have chosen already registered', 'error')
             if duplicate_nif:
-                flash('NIF que você escolheu já está cadastrado.', 'error')
+                flash('NIF you have chosen already registered.', 'error')
 
             if not(duplicate_user or duplicate_contact or duplicate_email or duplicate_nif):
                 new_user = User(nif=create_form.nif.data,
@@ -147,16 +149,15 @@ def create_account():
                 database.session.add(new_user)
                 database.session.commit()
 
-                msg = Message('Cadastrado Com Sucesso', recipients=[new_user.email])
+                msg = Message('Successfully registered', recipients=[new_user.email])
                 msg.html = render_template('email/create_notification.html', user=new_user)
                 mail.send(msg)
 
                 flash('Account Created Successfully', 'success')
-                # Clear the form fields after successful submission
-                return redirect(url_for('create_account'))
+                return redirect(url_for('create_account'))  # Clear the form fields after successful submission
         except IntegrityError as e:
             database.session.rollback()  # revert the process in case error ( hash or something)
-            print('DON T SAVE IN DB')
+            print("Failed to create account:", e)  # TO DEBUG
             flash('Failed to create account. Please try again', 'error')
     return render_template('register.html', create_form=create_form)
 
@@ -182,13 +183,15 @@ def edit_user(user):
 
             database.session.commit()
 
-            msg = Message('Dados Cadastrais Atualizados', recipients=[user_to_edit.email])
+            msg = Message('Updated registration data', recipients=[user_to_edit.email])
             msg.html = render_template('email/update_notification.html', user=user_to_edit)
             mail.send(msg)
 
             flash('User data updated successfully', 'success')
+            # print("User data updated successfully") TO DEBUG
         except IntegrityError as e:
             database.session.rollback()
+            print("Failed to update user data:", e)  # TO DEBUG
             flash('Failed to update user data. Please try again', 'error')
 
     return render_template('edit_user.html', edit_form=edit_form, user_to_edit=user_to_edit)
@@ -207,8 +210,9 @@ def delete_user(user):
             database.session.delete(user_to_delete)
             database.session.commit()
             flash('User Deleted Successfully', 'success')
-        except:
+        except Exception as e:
             database.session.rollback()
+            print("Error:", e)
             flash('Failed to delete user. Please try again', 'error')
 
     return redirect(url_for('see_all_users'))
@@ -219,6 +223,7 @@ def delete_user(user):
 @adm_required
 def see_all_users():
     users = User.query.all()
+    # print("All users:", users) TO DEBUG
     return render_template('all_users.html', users=users)
 
 
@@ -243,15 +248,18 @@ def see_all_trips():
             elif plate_filter:
                 try:
                     plate_query = int(search_query)
-                    trips_query = trips_query.filter(Trip.plate == int(search_query))
+                    trips_query = trips_query.filter(Trip.plate == plate_query)
                 except ValueError:
                     flash('Invalid input for plate filter(ONLY NUMBERS)', 'error')
                     return redirect(url_for('see_all_trips'))
-    else:
-        if all_filter:
-            trips = trips_query.all()
+
+    if all_filter:
+        trips = trips_query.all()
+        # print("All trips:", trips) TO DEBUG
+        return render_template('all_trips.html', trips=trips)
 
     trips = trips_query.all()
+
     return render_template('all_trips.html', trips=trips)
 
 
@@ -292,4 +300,4 @@ def administration():
 
 @app.errorhandler(401)  # Capture the 401 error
 def unauthorized(error):
-    return render_template('not_authorized.html', message="Voçê não tem permissão. Obrigatório fazer login"), 401
+    return render_template('not_authorized.html', message="You don't have permission! Login Required"), 401
