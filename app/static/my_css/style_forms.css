@@ -1,14 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Slab', serif;
+    text-decoration: none;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
 .container {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     flex-direction: column;
-    background: #b9b9b9;
-    border-radius: 10px;
-    height: 40vh;
-    width: 30%;
-    padding: 10px;
+    width: 100%;
 }
+.box-container{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 0px 10px rgba(0, 0, 10, 0.8);
+    padding: 10px;
+    background-color: #ffffff;
+    width: 350px;
+}
+.box-img-form{
+    display:flex;
+    align:items: center;
+    justify-content: center;
+    height: 60%;
+}
+
 .create-account{
     border-left: black 2px solid;
     display: flex;
