@@ -30,14 +30,39 @@ body {
     padding: 10px;
     background-color: #ffffff;
     width: 350px;
+    height: auto;
 }
-.box-img-form{
+.box-img-login{
     display:flex;
     align:items: center;
     justify-content: center;
-    height: 60%;
+    margin-bottom: 20px;
 }
 
+.img-login{
+    height: auto;
+    width: 150px;
+}
+.box-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    width: 100%;
+}
+form{
+    height: auto;
+    width: 100%;
+}
+.input-form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+input#username.field-user,
+input#password.field-user{
+    width: 200px;
+}
 .create-account{
     border-left: black 2px solid;
     display: flex;
@@ -69,9 +94,4 @@ form{
 }
 input#username{
     width: 223px;
-}
-img{
-    height: 50%;
-    width: 60%;
-    border-radius: 700px;
 }

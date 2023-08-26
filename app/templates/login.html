@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon-company.png') }}" type="image/xx-icon">
-    <title>Tagus Company</title>
+    <title>Your Company</title>
     <!-- Google Fonts(CARTER ONE)-->
     <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
@@ -34,18 +34,18 @@
     <div class="container">
         <div class="box-container">
             <div class="box-img-login">
-                <img src="static/images/img_login.jpg">
+                <img class="img-login" alt="login-img" src="static/images/logo_company.png">
             </div>
 
             <div class="box-form">
                 <form action="{{ url_for('login') }}" method="POST">
                 {{ form.csrf_token }} <!-- Security field to the form, to validate -->
                     <div class="input-form">
-                         <label>User</label>
+                         <!-- <label>User</label> -->
                         {{ form.username(class="field-user", placeholder="Your User") }}
                     </div>
                     <div class="input-form">
-                        <label>Password</label>
+                        <!-- <label>Password</label> -->
                         {{ form.password(class="field-password", placeholder="Your Password") }}
                     </div>
                     <button type="submit" class="submit-button"> Login </button>
