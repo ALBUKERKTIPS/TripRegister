@@ -45,7 +45,6 @@ body p{
 .box-top{
     display: flex;
     margin-bottom: 15px;
-    padding: 5px;
 }
 .box-welcome{
     display: flex;
@@ -54,6 +53,11 @@ body p{
     text-align: center;
     flex-direction: column;
     width: 60%;
+    margin-right: 10px;
+}
+ul{
+    list-style-type: none;
+    padding-left: 0;
 }
 .box-buttons{
     display: flex;
@@ -83,8 +87,42 @@ button{
     width: 6rem;
 }
 .box-bottom{
+    width: 100%;
+    display: flex;
+}
+.box-logout{
     width: 60%;
+    display:flex;
+    justify-content: center;
+    margin-right: 10px;
+}
+.box-logout a {
     display: flex;
     justify-content: center;
-    position: relative;
+    align-items: center;
+    text-decoration: none;
+}
+.box-start-work{
+    display: flex;
+    justify-content: center;
+    width: 40%;
+}
+.box-start-work button{
+    background-color: green;
+    color: white;
+    width: 7rem;
+    height: 3rem;
+    animation: pulse 1s infinite ease-in-out;
+    transform-origin: center;
+}
+.box-start-work button a{
+    padding: 10px;
+}
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
