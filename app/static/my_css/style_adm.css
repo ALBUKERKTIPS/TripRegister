@@ -39,12 +39,13 @@ body p{
     box-shadow: 0 0px 10px rgba(0, 0, 10, 0.8);
     padding: 10px;
     background: rgba(255, 255, 255, 0.1);
-    min-width: 350px;
+    min-width: 400px;
     height: auto;
+    padding: 20px;
 }
 .box-top{
     display: flex;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     padding: 5px;
 }
 .box-welcome{
@@ -53,15 +54,21 @@ body p{
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    width: 60%;
+    width: 50%;
+    border-right: 1px dotted white;
+    padding: 10px;
+}
+h4{
+    font-size: 20px;
 }
 .box-buttons{
     display: flex;
     flex-direction: column;
-    width: auto;
+    width: 50%;
     align-items: center;
     justify-content: space-around;
     height: 100%;
+    padding: 10px;
 }
 .box-top button{
     border: 1px solid black;
@@ -83,7 +90,7 @@ button{
     width: 6rem;
 }
 .box-bottom{
-    width: 60%;
+    width: 100%;
     display: flex;
     justify-content: center;
     position: relative;

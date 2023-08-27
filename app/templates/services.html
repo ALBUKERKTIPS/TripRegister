@@ -3,123 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon-company.png') }}" type="image/xx-icon">
+    <title>Services</title>
+    <!-- Google Fonts(OXYGEN)-->
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
+    <!-- Import Style -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_services.css')}}">
-    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_services.css') }}">
 </head>
 <body>
-{% with messages = get_flashed_messages(with_categories=True) %}
-            {% if messages %}
-                <div class="alert" role="alert">
-                    <ul class="flash-messages">
-                        {% for category, message in messages %}
-                            {% if category == 'success' %}
-                                <li class="alert alert-success">{{ message }}</li>
-                            {% elif category == 'error' %}
-                                <li class="alert alert-danger">{{ message }}</li>
-                            {% else %}
-                                <li class="{{ category }}"> {{ message }}</li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-        {% endwith %}
-<div class="container">
-    <img src="static/images/img_route_service.jpg" style="width: 30%; height: 30%;">
-    <form action="{{ url_for('service') }}" method="POST">
-        {{ services_form.hidden_tag() }}
-        <div class="top-form">
-            <div class="form-group">
-                <label></label>
-                {{ services_form.plate(class="form-control", placeholder="Car Plate") }}
-                {% for error in services_form.plate.errors %}
-                    <p style="color: red;">{{ error }}</p>
-                {% endfor %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="alert" role="alert">
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        {% if category == 'success' %}
+                            <li class="alert alert-success">{{ message }}</li>
+                        {% elif category == 'error' %}
+                            <li class="alert alert-danger">{{ message }}</li>
+                        {% else %}
+                            <li class="{{ category }}"> {{ message }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
             </div>
-        </div>
-        <div class="center-form">
-            <div class="side-left-form">
-                <div class="form-group">
-                    <label>{{ services_form.departure_place.label }}</label>
-                    {{ services_form.departure_place(class="form-control") }}
-                    {% for error in services_form.departure_place.errors %}
-                        <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    <label>{{ services_form.departure_time.label }}</label>
-                    {{ services_form.departure_time(class="form-control") }}
-                    {% for error in services_form.departure_time.errors %}
-                        <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    <label>{{ services_form.departure_miles.label }}</label>
-                    {{ services_form.departure_miles(class="form-control") }}
-                    {% for error in services_form.departure_miles.errors %}
-                        <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    <label>{{ services_form.departure_fuel.label }}</label>
-                    {{ services_form.departure_fuel(class="form-control") }}
-                    {% for error in services_form.departure_fuel.errors %}
-                        <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
+        {% endif %}
+    {% endwith %}
+    <div class="container">
+        <div class="box-container">
+            <div class="box-top">
+                <img alt="car" class="car" src="static/images/car_service.png">
             </div>
-            <div class="right-side-form">
-                <div class="form-group">
-                    <label>{{ services_form.arrive_place.label }}</label>
-                    {{ services_form.arrive_place(class="form-control") }}
-                    {% for error in services_form.arrive_place.errors %}
-                        <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
+            <form action="{{ url_for('service') }}" method="POST">
+                {{ services_form.hidden_tag() }}
+                <div class="box-middle">
+                    <div class="box-middle-top">
+                        <div class="input-form">
+                            <!-- <label>IF NECESSARY</label> -->
+                            {{ services_form.plate(class="form-control", placeholder="Car Plate") }}
+                            {% for error in services_form.plate.errors %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="box-middle-middle">
+                        <div class="box-middle-middle-left">
+                            <div class="input-form">
+                                <label>{{ services_form.departure_place.label }}</label>
+                                {{ services_form.departure_place(class="form-control") }}
+                                {% for error in services_form.departure_place.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="input-form">
+                                <label>{{ services_form.departure_time.label }}</label>
+                                {{ services_form.departure_time(class="form-control") }}
+                                {% for error in services_form.departure_time.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="input-form">
+                                <label>{{ services_form.departure_miles.label }}</label>
+                                {{ services_form.departure_miles(class="form-control") }}
+                                {% for error in services_form.departure_miles.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="input-form">
+                                <label>{{ services_form.departure_fuel.label }}</label>
+                                {{ services_form.departure_fuel(class="form-control") }}
+                                {% for error in services_form.departure_fuel.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="box-middle-middle-right">
+                            <div class="form-group">
+                                <label>{{ services_form.arrive_place.label }}</label>
+                                {{ services_form.arrive_place(class="form-control") }}
+                                {% for error in services_form.arrive_place.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label>{{ services_form.arrive_time.label }}</label>
+                                {{ services_form.arrive_time(class="form-control") }}
+                                {% for error in services_form.arrive_time.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label>{{ services_form.arrive_miles.label }}</label>
+                                {{ services_form.arrive_miles(class="form-control") }}
+                                {% for error in services_form.arrive_miles.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label>{{ services_form.arrive_fuel.label }}</label>
+                                {{ services_form.arrive_fuel(class="form-control") }}
+                                {% for error in services_form.arrive_fuel.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-middle-bottom">
+                        <div class="input-form">
+                            <label>{{ services_form.service.label }}</label>
+                            {{ services_form.service(class="form-control") }}
+                            {% for error in services_form.service.errors %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>{{ services_form.arrive_time.label }}</label>
-                    {{ services_form.arrive_time(class="form-control") }}
-                    {% for error in services_form.arrive_time.errors %}
-                        <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    <label>{{ services_form.arrive_miles.label }}</label>
-                    {{ services_form.arrive_miles(class="form-control") }}
-                    {% for error in services_form.arrive_miles.errors %}
-                        <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    <label>{{ services_form.arrive_fuel.label }}</label>
-                    {{ services_form.arrive_fuel(class="form-control") }}
-                    {% for error in services_form.arrive_fuel.errors %}
-                        <p style="color: red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="bottom-form">
-            <div class="form-group">
-                <label>{{ services_form.service.label }}</label>
-                {{ services_form.service(class="form-control") }}
-                {% for error in services_form.service.errors %}
-                    <p style="color: red;">{{ error }}</p>
-                {% endfor %}
-            </div>
-            <div class="btn">
-                    <button type="submit" class="btn-primary">
-                        Done!<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <div class="box-bottom">
+                    <div class="box-done">
+                        <button type="submit" class="btn-primary">
+                            Done!
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                             </svg>
-                    </button>
+                        </button>
+                    </div>
+                    <div class="box-back-profile">
+                        <a href="{{ url_for('start_services') }}">
+                            <button class="back-profile">Back Profile</button>
+                        </a>
+                    </div>
                 </div>
+            </form>
         </div>
-    </form>
-</div>
-<a href="{{ url_for('start_services') }}">
-            <button class="back-profile">Back to your Profile</button>
-        </a>
+    </div>
+<p>Made by Anderson Albuquerque</p>
 </body>
 </html>
