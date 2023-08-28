@@ -39,7 +39,7 @@ body p{
     box-shadow: 0 0px 10px rgba(0, 0, 10, 0.8);
     padding: 10px;
     background: rgba(255, 255, 255, 0.1);
-    min-width: 400px;
+    min-width: 70%;
     height: auto;
     padding: 20px;
 }
@@ -49,24 +49,65 @@ body p{
     padding: 5px;
     justify-content: center;
     align-items: center;
-    position: relative;
+    width: 100%;
 }
 .car {
     width: 100px;
     height: 100px;
+    position: relative;
+    animation: carAnimation 4s infinite;
+    transform: rotateY(180deg);
+    fill: red;
 }
-.box-welcome{
+@keyframes carAnimation {
+    0% {
+        transform: rotateY(180deg) translateX(150px);
+        fill: red;
+    }
+    25% {
+        fill: red;
+    }
+    50% {
+        fill: white;
+    }
+    75% {
+        fill: #08f26e;
+    }
+    100% {
+        transform: rotateY(180deg) translateX(-150px);
+        fill: #08f26e;
+    }
+}
+form{
+    width: 100%;
+}
+.box-middle-middle{
+    display: flex;
+    flex-direction: row;
+}
+.input-form,
+.form-control{
+    width: 13rem;
+}
+.box-middle-top{
+    display: flex;
+    justify-content: center;
+    .form-control{
+        text-align: center;
+    }
+}
+.box-middle-middle-left,
+.box-middle-middle-right{
+    width: 50%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
     flex-direction: column;
-    width: 50%;
-    border-right: 1px dotted white;
-    padding: 10px;
+    padding: 5px;
 }
-h4{
-    font-size: 20px;
+.box-middle-bottom{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 .box-buttons{
     display: flex;
