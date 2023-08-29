@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp, Val
 import pycountry
 
 
-def nif_and_contact_length_check(field):
+def nif_and_contact_length_check(form, field):
     data = str(field.data)
     if len(data) != 9 or not data.isdigit():
         raise ValidationError('Must contain 9 valid numbers')

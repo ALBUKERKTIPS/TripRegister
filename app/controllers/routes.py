@@ -206,14 +206,17 @@ def delete_user(user):
     if user_to_delete is None:
         flash('User not Found', 'error')
     else:
-        try:
-            database.session.delete(user_to_delete)
-            database.session.commit()
-            flash('User Deleted Successfully', 'success')
-        except Exception as e:
-            database.session.rollback()
-            print("Error:", e)
-            flash('Failed to delete user. Please try again', 'error')
+        if current_user.position == "ADM" and user_to_delete.position == "ADM":
+            flash("You cannot delete another ADM user(Contact Support)", 'error')
+        else:
+            try:
+                database.session.delete(user_to_delete)
+                database.session.commit()
+                flash('User Deleted Successfully', 'success')
+            except Exception as e:
+                database.session.rollback()
+                print("Error:", e)
+                flash('Failed to delete user. Please try again', 'error')
 
     return redirect(url_for('see_all_users'))
 

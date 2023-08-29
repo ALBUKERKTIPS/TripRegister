@@ -49,7 +49,7 @@ body p{
     margin-bottom: 30px;
 }
 .box-img-login svg{
-    animation: flip 5s linear infinite;
+    animation: flip 7s linear infinite;
     transform-origin: center;
 }
 @keyframes flip {
@@ -91,8 +91,8 @@ label{
     border-radius: 5px 0px 0px 5px;
     margin: 10px 0px 10px 0px;
 }
-input#username.field-user,
-input#password.field-password{
+.field-user,
+.field-password{
     width: 250px;
     height: 40px;
     border: none;
@@ -114,4 +114,28 @@ button{
     border-radius: 5px;
     text-transform: uppercase;
     width: 6rem;
+}
+.demo{
+    display: flex;
+    width: 100%;
+    border: 1px solid black;
+    justify-content: space-around;
+    width: 310px;
+}
+.txt-demo{
+    position: relative;
+}
+.adm,
+.employee{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 5px 0px 5px 0px;
+}
+.demo button{
+    height: 30px;
+    width: 4rem;
+    font-size: 10px;
+    background-color: #538a8b;
 }

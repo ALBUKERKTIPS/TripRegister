@@ -46,7 +46,7 @@
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                             </svg>
                          </label>
-                        {{ form.username(class="field-user", placeholder="Username", autocomplete="username") }}
+                        {{ form.username(class="field-user", id="username-field", placeholder="Username", autocomplete="username") }}
                     </div>
                     <div class="input-form">
                         <label>
@@ -54,7 +54,7 @@
                                 <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                             </svg>
                         </label>
-                        {{ form.password(class="field-password", placeholder="Password", autocomplete="current-password") }}
+                        {{ form.password(class="field-password", id="password-field", placeholder="Password", autocomplete="current-password") }}
                     </div>
                     <div class="button-form">
                         <a href="#">Forgot password ?</a>
@@ -62,9 +62,36 @@
                     </div>
                 </form>
             </div>
-            <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <div class="demo">
+        <div class="adm">
+            <p class="txt-demo"> For demonstration with ADM </p>
+            <button type="button" class="demo-button" data-user="demo" data-password="Demo123*">Click Here!</button>
+        </div>
+        <div class="employee">
+            <p class="txt-demo"> For demonstration with EMPLOYEE </p>
+            <button type="button" class="demo-button" data-user="demo2" data-password="Demo123*">Click Here!</button>
+        </div>
+    </div>
         </div>
     </div>
 <p>Made by Anderson Albuquerque</p>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const demoButtons = document.querySelectorAll(".demo-button");
+    const usernameField = document.getElementById("username-field");
+    const passwordField = document.getElementById("password-field");
+
+    demoButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const user = this.getAttribute("data-user");
+            const password = this.getAttribute("data-password");
+
+            usernameField.value = user;
+            passwordField.value = password;
+        });
+    });
+});
+</script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
 </html>
