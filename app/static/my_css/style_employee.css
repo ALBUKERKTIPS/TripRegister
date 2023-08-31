@@ -14,14 +14,6 @@ body {
   padding: 0;
   background: radial-gradient(ellipse at center top, #4e7a89 0%, #2e3441 100%);
 }
-body p{
-    position: absolute;
-    bottom: 0;
-    text-align: center;
-    font-size: 10px;
-    left:0;
-    margin: 0px;
-}
 
 .container {
     display: flex;
@@ -37,16 +29,15 @@ body p{
     flex-direction: column;
     border-radius: 10px;
     box-shadow: 0 0px 10px rgba(0, 0, 10, 0.8);
-    padding: 10px;
     background: rgba(255, 255, 255, 0.1);
-    min-width: 400px;
+    width: 90%;
     height: auto;
-    padding: 30px;
 }
 .box-top{
     display: flex;
     margin-bottom: 10px;
     padding: 5px;
+    width: 100%;
 }
 .box-welcome{
     display: flex;
@@ -73,20 +64,20 @@ h4{
 .box-top button{
     border: 1px solid black;
     width: 100%;
-    padding: 8px;
+    padding: 4px;
     align-items: center;
     background-color: #538a9a;
     height: 40px;
-    font-size: 15px;
+    font-size: 13px;
 }
 button{
     background-color: #791911;
     color: white;
     border: none;
-    height: 30px;
+    height: 25px;
     border-radius: 5px;
-    font-size: 12px;
-    width: 5rem;
+    font-size: 13px;
+    width: 80px;
 }
 .box-bottom{
     width: 100%;
@@ -98,8 +89,9 @@ button{
 .box-logout{
     width: 50%;
     display:flex;
-    justify-content: center;
+    align-items: flex-start;
     margin-top: 10px;
+    width: 100%;
 }
 .box-logout a {
     display: flex;
@@ -110,7 +102,7 @@ button{
 .box-start-work{
     display: flex;
     justify-content: center;
-    width: 50%;
+    width: 100%;
     padding: 10px;
 }
 .box-start-work button{
