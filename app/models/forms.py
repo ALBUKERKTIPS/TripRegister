@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, EmailField, SelectField, TimeField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp, ValidationError
-import pycountry
 
 
 def nif_and_contact_length_check(form, field):
@@ -23,10 +22,7 @@ class CreateForm(FlaskForm):
                         ("WASHER", "Washer"),
                         ("ALL", "Do Everything")]
     position = SelectField("Position", choices=position_choices, validators=[DataRequired()])
-    country_code_choices = [(f"+{country.alpha_2}", f"{country.name}(+{country.alpha_2})")
-                            for country in pycountry.countries]
-    country_code = SelectField("Contact", choices=country_code_choices, validators=[DataRequired()])
-    contact = IntegerField("Phone Number", validators=[DataRequired(), nif_and_contact_length_check])
+    contact = IntegerField("Phone", validators=[DataRequired(), nif_and_contact_length_check])
     email = EmailField("Email", validators=[DataRequired(), Email()])
     confirm_email = EmailField("Confirm Email",
                                validators=[DataRequired(), EqualTo('email', message='Emails are different')])
@@ -35,9 +31,9 @@ class CreateForm(FlaskForm):
                              validators=[DataRequired(),
                                          Length(min=8, message="Password must be at least 8 characters long"),
                                          Regexp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$',
-                                                message="Password must contain at least 1 UPPERCASE LETTER, "
-                                                        "at least 1 NUMBER, "
-                                                        "and at least 1 ESPECIAL CHARACTER")])
+                                                message="1 Upper Letter, "
+                                                        "1 Number, "
+                                                        "1 Especial Character")])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(),
                                                  EqualTo('password', message='Passwords are different')])

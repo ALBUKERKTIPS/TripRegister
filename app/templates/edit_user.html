@@ -38,9 +38,8 @@
                 {{ edit_form.position(class="form-control", placeholder="NEW Job") }}
             </div>
             <div class="form-group">
-                <label>{{ edit_form.country_code.label }}</label>
+                <label>{{ edit_form.contact.label }}</label>
                 <div class="input-group">
-                    {{ edit_form.country_code(class="form-control input-group-prepend custom-dropdown") }}
                     {{ edit_form.contact(class="form-control", placeholder="NEW Phone") }}
                 </div>
                 {% for error in edit_form.contact.errors %}
