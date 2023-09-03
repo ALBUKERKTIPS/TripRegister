@@ -170,31 +170,34 @@ def edit_user(user):
 
     if user_to_edit is None:
         flash('User not found', 'error')
-        return redirect(url_for('see_all_users'))
+    else:
+        if current_user.position == "ADM" and user_to_edit.position == "ADM":
+            flash("You cannot EDIT another ADM user(Contact Support)", 'error')
+            return redirect(url_for('see_all_users'))
+        else:
+            edit_form = CreateForm(obj=user_to_edit)
 
-    edit_form = CreateForm(obj=user_to_edit)
+            if edit_form.validate_on_submit():
+                try:
+                    edit_form.populate_obj(user_to_edit)
 
-    if edit_form.validate_on_submit():
-        try:
-            edit_form.populate_obj(user_to_edit)
+                    if edit_form.password.data:
+                        user_to_edit.set_password(edit_form.password.data)
 
-            if edit_form.password.data:
-                user_to_edit.set_password(edit_form.password.data)
+                    database.session.commit()
 
-            database.session.commit()
+                    msg = Message('Updated registration data', recipients=[user_to_edit.email])
+                    msg.html = render_template('email/update_notification.html', user=user_to_edit)
+                    mail.send(msg)
 
-            msg = Message('Updated registration data', recipients=[user_to_edit.email])
-            msg.html = render_template('email/update_notification.html', user=user_to_edit)
-            mail.send(msg)
-
-            flash('User data updated successfully', 'success')
-            # print("User data updated successfully") TO DEBUG
-        except IntegrityError as e:
-            database.session.rollback()
-            print("Failed to update user data:", e)  # TO DEBUG
-            flash('Failed to update user data. Please try again', 'error')
-
-    return render_template('edit_user.html', edit_form=edit_form, user_to_edit=user_to_edit)
+                    flash('User data updated successfully', 'success')
+                    # print("User data updated successfully") TO DEBUG
+                except IntegrityError as e:
+                    database.session.rollback()
+                    print("Failed to update user data:", e)  # TO DEBUG
+                    flash('Failed to update user data. Please try again', 'error')
+        # Something is wrong here, don't know
+        return render_template('edit_user.html', edit_form=edit_form, user_to_edit=user_to_edit)
 
 
 @app.route('/delete-user/<user>', methods=['GET', 'POST'])

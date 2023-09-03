@@ -33,14 +33,14 @@ body {
     width: 350px;
     height: auto;
 }
-.box-img-new-employee{
+.box-img{
     display:flex;
     align:items: center;
     justify-content: center;
     margin-bottom: 10px;
     height: auto;
 }
-.box-img-new-employee svg{
+.box-img svg{
     animation: flip 7s linear infinite;
     transform-origin: center;
 }
@@ -141,7 +141,7 @@ p{
     margin: 0;
     text-align: center;
     margin: 4px 0 4px 0;
-
+}
 @media (max-width: 400px) {
     .box-container {
         width: 90%; /* Ocupa toda a largura da tela */

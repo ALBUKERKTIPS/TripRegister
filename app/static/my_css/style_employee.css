@@ -14,7 +14,6 @@ body {
   padding: 0;
   background: radial-gradient(ellipse at center top, #4e7a89 0%, #2e3441 100%);
 }
-
 .container {
     display: flex;
     align-items: center;
@@ -29,93 +28,111 @@ body {
     flex-direction: column;
     border-radius: 10px;
     box-shadow: 0 0px 10px rgba(0, 0, 10, 0.8);
+    padding: 10px;
     background: rgba(255, 255, 255, 0.1);
-    width: 90%;
+    width: 350px;
     height: auto;
 }
-.box-top{
-    display: flex;
-    margin-bottom: 10px;
-    padding: 5px;
-    width: 100%;
-}
-.box-welcome{
+.box-img{
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    width: 50%;
-    border-right: 1px dotted white;
-    padding: 10px;
+    margin-bottom: 10px;
+}
+.box-img svg{
+    animation: flip 7s linear infinite;
+    transform-origin: center;
+}
+@keyframes flip {
+    0%, 100% {
+        transform: perspective(800px) rotateY(0deg);
+    }
+    50% {
+        transform: perspective(800px) rotateY(360deg);
+    }
 }
 h4{
     font-size: 20px;
 }
-.box-buttons{
+.box-main{
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
-    width: 50%;
-    align-items: center;
-    justify-content: space-around;
-    height: 100%;
-    padding: 10px;
-}
-.box-top button{
-    border: 1px solid black;
     width: 100%;
-    padding: 4px;
-    align-items: center;
-    background-color: #538a9a;
-    height: 40px;
-    font-size: 13px;
 }
 button{
-    background-color: #791911;
+    background-color: #538a9a;
     color: white;
     border: none;
-    height: 25px;
+    height: 45px;
     border-radius: 5px;
-    font-size: 13px;
-    width: 80px;
+    text-transform: uppercase;
+    width: 9rem;
 }
 .box-bottom{
     width: 100%;
+    height: 30px;
+    justify-content: flex-start;
+}
+a{
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 5px;
-}
-.box-logout{
-    width: 50%;
-    display:flex;
-    align-items: flex-start;
-    margin-top: 10px;
-    width: 100%;
-}
-.box-logout a {
-    display: flex;
     justify-content: center;
-    align-items: center;
     text-decoration: none;
+    width: 100%;
+    margin-bottom: 10px;
 }
-.box-start-work{
+.box-bottom button{
+    background-color: #791911;
+    color: white;
+    border: none;
+    height: 30px;
+    width: 100%;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 10px;
+    padding: 2px;
+}
+.box-bottom p{
+    position: relative;
+    width: auto;
+    height: 15px;
+    color: red;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    margin: 4px 0 4px 0;
+}
+@media (max-width: 400px) {
+    .box-container {
+        width: 90%; /* Ocupa toda a largura da tela */
+        max-width: 100%; /* Não exceda a largura máxima */
+    }
+}
+
+.button-start{
+    height: 110px;
+    width: 200px;
     display: flex;
     justify-content: center;
-    width: 100%;
-    padding: 10px;
+    align-items: center;
 }
-.box-start-work button{
+.button-start button{
     background-color: green;
     color: white;
     font-size:15px;
     width: 100%;
+    min-width: auto;
     height: 3rem;
     padding: 8px;
     animation: pulse 1s infinite ease-in-out;
     transform-origin: center;
 }
-.box-start-work button a{
+.button-start button a{
     padding: 10px;
 }
 @keyframes pulse {
