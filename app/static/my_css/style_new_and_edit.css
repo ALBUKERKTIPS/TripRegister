@@ -133,6 +133,7 @@ a{
 }
 p{
     position: relative;
+    background-color: black;
     width: auto;
     height: 15px;
     color: red;
