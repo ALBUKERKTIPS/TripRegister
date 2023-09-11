@@ -3,88 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon-company.png') }}" type="image/xx-icon">
+    <title>Your Trips</title>
+    <!-- Google Fonts(OXYGEN)-->
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
+    <!-- Import Style -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='my_css/style_all_users.css') }}">
-    <title>Title</title>
 </head>
 <body>
-<div class="container">
-    <div class="all-table">
-        {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            <div class="alert" role="alert">
-                <ul class="flash-messsages">
-                    {% for category, message in messages %}
-                        {% if category == 'success' %}
-                            <li class="alert alert-success">{{ message }}</li>
-                        {% elif category == 'error' %}
-                            <li class="alert alert-danger">{{ message }}</li>
-                        {% else %}
-                            <li class="{{ category }}">{{ message }}</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+    <div class="container">
+        <div class="box-container">
+            <div class="box-img">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="white" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                    <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                </svg>
             </div>
-        {% endif %}
-    {% endwith %}
-        <h1>Your Trips</h1>
-        <div class="search-bar" style="border: 1px solid black; border-radius: 5px; background-color: yellow; padding: 5px; margin-bottom: 5px;">
-            <form method="get" action="{{ url_for('see_all_trips_user') }}">
-                <label for="search">FILTER</label>
-                <input type="text" id="search" name="search_query" placeholder="Type Here...">
-                <label><input type="checkbox" name="search_by_plate">Plate</label>
-                <label><input type="checkbox" name="search_all">All</label>
-                <button type="submit">Filter!</button>
-            </form>
-        </div>
-            <div class="all-table-form">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>PLATE</th>
-                            <th>DATE</th>
-                            <th>CHECK-IN</th>
-                            <th>CHECK-OUT</th>
-                            <th>CHECK-IN TIME</th>
-                            <th>CHECK-OUT TIME</th>
-                            <th>CHECK-IN MILES</th>
-                            <th>CHECK-OUT MILES</th>
-                            <th>CHECK-IN FUEL</th>
-                            <th>CHECK-OUT FUEL</th>
-                            <th>SERVICE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if trips_current_user %}
-                            {% for trip in trips_current_user %}
-                            <tr>
-                                <td>{{ trip.id }}</td>
-                                <td>{{ trip.plate }}</td>
-                                <td>{{ trip.trip_date}}</td>
-                                <td>{{ trip.departure_place }}</td>
-                                <td>{{ trip.arrive_place }}</td>
-                                <td>{{ trip.departure_time }}</td>
-                                <td>{{ trip.arrive_time }}</td>
-                                <td>{{ trip.departure_miles }}</td>
-                                <td>{{ trip.arrive_miles }}</td>
-                                <td>{{ trip.departure_fuel }}</td>
-                                <td>{{ trip.arrive_fuel }}</td>
-                                <td>{{ trip.service }}</td>
-                            </tr>
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <div class="alert" role="alert">
+                        <ul class="flash-messages">
+                            {% for category, message in messages %}
+                                {% if category == 'success' %}
+                                    <li class="alert alert-success">{{ message }}</li>
+                                {% elif category == 'error' %}
+                                    <li class="alert alert-danger">{{ message }}</li>
+                                {% else %}
+                                    <li class="{{ category }}">{{ message }}</li>
+                                {% endif %}
                             {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="12">Nenhum resultado encontrado.</td>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <div class="search-bar" style="border: 1px solid black; border-radius: 5px; background-color: #C49102; padding: 5px; margin-bottom: 5px;">
+                <form method="get" action="{{ url_for('see_all_trips_user') }}" style="justify-content: center; display: flex; flex-wrap: wrap;">
+                    <label for="search">FILTER</label>
+                    <input type="text" id="search" name="search_query" placeholder="Type Here..." style="max-width: 90px; margin-right: 2px;">
+                    <label style="margin-right: 2px;"><input type="checkbox" name="search_by_plate">Plate</label>
+                    <label style="margin-right: 2px;"><input type="checkbox" name="search_all">All</label>
+                    <button type="submit">Filter!</button>
+                </form>
             </div>
-        <a href="{{ url_for('start_services') }}">
-            <button class="btn-back">Back to Your Profile</button>
-        </a>
+            <div class="card-container">
+                {% if trips_current_user %}
+                    {% for trip in trips_current_user %}
+                        <div class="card">
+                            <h2>Trip - {{ trip.id }}</h2>
+                            <p><strong>Plate: </strong>{{ trip.plate }}</p>
+                            <p><strong>Date: </strong>{{ trip.trip_date }}</p>
+                            <p><strong>Check-In: </strong>{{ trip.departure_place }}</p>
+                            <p><strong>Check-Out: </strong>{{ trip.arrive_place }}</p>
+                            <p><strong>Check-In Time: </strong>{{ trip.departure_time }}</p>
+                            <p><strong>Check-Out Time: </strong>{{ trip.arrive_time }}</p>
+                            <p><strong>Check-In Miles: </strong>{{ trip.departure_miles }}</p>
+                            <p><strong>Check-Out Miles: </strong>{{ trip.arrive_miles }}</p>
+                            <p><strong>Check-In Fuel: </strong>{{ trip.departure_fuel }}</p>
+                            <p><strong>Check-out Fuel: </strong>{{ trip.arrive_fuel }}</p>
+                            <p><strong>Service: </strong>{{ trip.service }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="card">
+                        <h2>No results found.</h2>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="box-bottom">
+                <a href="{{ url_for('start_services') }}" class="bt-back">
+                    Back to Profile
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
     </div>
-</div>
 </body>
 </html>
